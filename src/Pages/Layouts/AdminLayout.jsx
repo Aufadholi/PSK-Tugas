@@ -9,11 +9,11 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-gray-50 flex">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="flex flex-col flex-1">
         <Header onHamburgerClick={() => setSidebarOpen((v) => !v)} />
-        <main className="flex-1 p-6 overflow-x-auto">
+        <main className="flex-1 p-8 overflow-x-auto">
           <Outlet />
         </main>
         <Footer />
