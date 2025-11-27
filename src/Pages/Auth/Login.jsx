@@ -6,24 +6,23 @@ import Link from "@/Pages/Layouts/Components/Link";
 import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
 import Form from "@/Pages/Layouts/Components/Form";
-import { showToast } from "@/Utils/Helpers/ToastHelpers";
-
-import { dummyUser } from "@/Data/Dummy";
+import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
+import { login } from "@/Utils/Apis/AuthApi";
 
 const Login = () => {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-
-    if (email === dummyUser.email && password === dummyUser.password) {
-      localStorage.setItem("user", JSON.stringify(dummyUser));
-      showToast("Login berhasil!", "success");
+    try {
+      const user = await login(email, password);
+      localStorage.setItem("user", JSON.stringify(user));
+      toastSuccess("Login berhasil!");
       setTimeout(() => {
         window.location.href = "/admin/dashboard";
       }, 1000);
-    } else {
-      showToast("Email atau password salah!", "error");
+    } catch (err) {
+      toastError(err.message);
     }
   };
 

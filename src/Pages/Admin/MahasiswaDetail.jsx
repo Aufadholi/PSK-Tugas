@@ -1,12 +1,32 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { mahasiswaList } from "@/Data/Dummy";
+import { getMahasiswa } from "@/Utils/Apis/MahasiswaApi";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const MahasiswaDetail = () => {
-  const { nim } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const mahasiswa = mahasiswaList.find((m) => m.nim === nim);
+  const [mahasiswa, setMahasiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMahasiswa = async () => {
+      try {
+        const res = await getMahasiswa(id);
+        setMahasiswa(res.data);
+      } catch {
+        toastError("Data tidak ditemukan");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMahasiswa();
+  }, [id]);
+
+  if (loading) {
+    return <p className="text-center">Memuat data...</p>;
+  }
 
   if (!mahasiswa) {
     return (
@@ -19,7 +39,7 @@ const MahasiswaDetail = () => {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Data Tidak Ditemukan</h2>
-            <p className="text-gray-600 mb-6">Mahasiswa dengan NIM {nim} tidak ditemukan dalam database.</p>
+            <p className="text-gray-600 mb-6">Mahasiswa dengan ID {id} tidak ditemukan dalam database.</p>
             <button
               onClick={() => navigate("/admin/mahasiswa")}
               className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"

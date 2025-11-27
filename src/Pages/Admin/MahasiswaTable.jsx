@@ -28,7 +28,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
               </tr>
             ) : (
               mahasiswa.map((mhs) => (
-                <tr key={mhs.nim} className="hover:bg-gray-50 transition-colors">
+                <tr key={mhs.id} className="hover:bg-gray-50 transition-colors">
                   <td className="py-4 px-6">
                     <span className="font-mono text-sm font-semibold text-gray-700">{mhs.nim}</span>
                   </td>
@@ -56,7 +56,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
                     <div className="flex items-center justify-center gap-2">
                       <button
                         className="group relative px-3 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-medium text-sm transition-all duration-200"
-                        onClick={() => onDetail(mhs.nim)}
+                        onClick={() => onDetail(mhs.id)}
                         title="Lihat Detail"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
                       </button>
                       <button
                         className="group relative px-3 py-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 font-medium text-sm transition-all duration-200"
-                        onClick={() => openEditModal(mhs.nim)}
+                        onClick={() => openEditModal(mhs.id)}
                         title="Edit Data"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
                       </button>
                       <button
                         className="group relative px-3 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-medium text-sm transition-all duration-200"
-                        onClick={() => onDelete(mhs.nim)}
+                        onClick={() => onDelete(mhs.id)}
                         title="Hapus Data"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

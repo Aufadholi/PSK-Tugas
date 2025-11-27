@@ -1,34 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { mahasiswaList as initialList } from "@/Data/Dummy";
 import MahasiswaModal from "./MahasiswaModal";
 import MahasiswaTable from "./MahasiswaTable";
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
+import {
+  getAllMahasiswa,
+  storeMahasiswa as apiStoreMahasiswa,
+  updateMahasiswa as apiUpdateMahasiswa,
+  deleteMahasiswa as apiDeleteMahasiswa,
+} from "@/Utils/Apis/MahasiswaApi";
 
 const Mahasiswa = () => {
-  const [mahasiswa, setMahasiswa] = useState(initialList);
+  const [mahasiswa, setMahasiswa] = useState([]);
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  // const [loading, setLoading] = useState(true); // loading tidak dipakai
   const navigate = useNavigate();
 
+  // Fetch data dari API
+  const fetchMahasiswa = async () => {
+    try {
+      const res = await getAllMahasiswa();
+      setMahasiswa(res.data);
+    } catch {
+      toastError("Gagal mengambil data mahasiswa");
+    }
+  };
+
+  useEffect(() => {
+    fetchMahasiswa();
+  }, []);
+
   // Tambah mahasiswa baru
-  const storeMahasiswa = (data) => {
-    setMahasiswa([...mahasiswa, data]);
+  const handleStoreMahasiswa = async (data) => {
+    try {
+      await apiStoreMahasiswa(data);
+      toastSuccess("Data berhasil ditambahkan");
+      fetchMahasiswa();
+    } catch {
+      toastError("Gagal menambah data");
+    }
   };
 
   // Update mahasiswa
-  const updateMahasiswa = (data) => {
-    setMahasiswa(
-      mahasiswa.map((mhs) =>
-        mhs.nim === data.nim ? { ...mhs, ...data } : mhs
-      )
-    );
+  const handleUpdateMahasiswa = async (data) => {
+    try {
+      await apiUpdateMahasiswa(data.id, data);
+      toastSuccess("Data berhasil diperbarui");
+      fetchMahasiswa();
+    } catch {
+      toastError("Gagal update data");
+    }
   };
 
   // Delete mahasiswa
-  const deleteMahasiswa = (nim) => {
-    setMahasiswa(mahasiswa.filter((mhs) => mhs.nim !== nim));
+  const handleDeleteMahasiswa = async (id) => {
+    confirmDelete(async () => {
+      try {
+        await apiDeleteMahasiswa(id);
+        toastSuccess("Data berhasil dihapus");
+        fetchMahasiswa();
+      } catch {
+        toastError("Gagal menghapus data");
+      }
+    });
   };
 
   // Modal tambah
@@ -38,18 +74,10 @@ const Mahasiswa = () => {
   };
 
   // Modal edit
-  const openEditModal = (nim) => {
-    const mhs = mahasiswa.find((m) => m.nim === nim);
+  const openEditModal = (id) => {
+    const mhs = mahasiswa.find((m) => m.id === id);
     setSelectedMahasiswa(mhs);
     setModalOpen(true);
-  };
-
-  // Hapus data
-  const handleDelete = (nim) => {
-    confirmDelete(() => {
-      deleteMahasiswa(nim);
-      toastSuccess("Data berhasil dihapus");
-    });
   };
 
   // Submit modal
@@ -60,8 +88,7 @@ const Mahasiswa = () => {
     }
     if (selectedMahasiswa) {
       confirmUpdate(() => {
-        updateMahasiswa(form);
-        toastSuccess("Data berhasil diperbarui");
+        handleUpdateMahasiswa(form);
         setModalOpen(false);
       });
     } else {
@@ -70,10 +97,14 @@ const Mahasiswa = () => {
         toastError("NIM sudah terdaftar!");
         return;
       }
-      storeMahasiswa(form);
-      toastSuccess("Data berhasil ditambahkan");
+      handleStoreMahasiswa(form);
       setModalOpen(false);
     }
+  };
+
+  // Hapus data
+  const handleDelete = (id) => {
+    handleDeleteMahasiswa(id);
   };
 
   return (
