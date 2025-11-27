@@ -1,22 +1,18 @@
-import React from "react";
-import Input from "@/Pages/Layouts/Components/Input";
-import Label from "@/Pages/Layouts/Components/Label";
-import Button from "@/Pages/Layouts/Components/Button";
-import Link from "@/Pages/Layouts/Components/Link";
-import Card from "@/Pages/Layouts/Components/Card";
-import Heading from "@/Pages/Layouts/Components/Heading";
-import Form from "@/Pages/Layouts/Components/Form";
-import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
+
+
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 import { login } from "@/Utils/Apis/AuthApi";
+import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
+  const { setUser } = useAuthStateContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     try {
       const user = await login(email, password);
-      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
       toastSuccess("Login berhasil!");
       setTimeout(() => {
         window.location.href = "/admin/dashboard";
