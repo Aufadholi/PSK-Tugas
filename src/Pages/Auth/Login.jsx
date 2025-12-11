@@ -35,25 +35,25 @@ const Login = () => {
           <p className="text-gray-500">Platform Pembelajaran Digital</p>
         </div>
 
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-5">
             <div>
-              <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
-              <Input 
+              <label htmlFor="email" className="text-gray-700 font-medium">Email</label>
+              <input 
                 type="email" 
                 name="email" 
                 placeholder="nama@universitas.ac.id" 
-                className="mt-1"
+                className="mt-1 w-full border rounded px-3 py-2"
                 required 
               />
             </div>
             <div>
-              <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
-              <Input 
+              <label htmlFor="password" className="text-gray-700 font-medium">Password</label>
+              <input 
                 type="password" 
                 name="password" 
                 placeholder="Masukkan password" 
-                className="mt-1"
+                className="mt-1 w-full border rounded px-3 py-2"
                 required 
               />
             </div>
@@ -62,18 +62,18 @@ const Login = () => {
                 <input type="checkbox" className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
                 <span className="ml-2 text-sm text-gray-600">Ingat saya</span>
               </label>
-              <Link href="#" className="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
-                Lupa password?
-              </Link>
+                  <a href="#" className="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
+                    Lupa password?
+                  </a>
             </div>
-            <Button 
+            <button 
               type="submit" 
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
             >
               Masuk
-            </Button>
+            </button>
           </div>
-        </Form>
+        </form>
         
         <div className="mt-6 pt-6 border-t border-gray-200">
           <p className="text-xs text-center text-gray-500">

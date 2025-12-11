@@ -9,13 +9,25 @@ import { useMahasiswa } from "@/Utils/Hooks/useMahasiswa";
 const Mahasiswa = () => {
   const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const {
-    mahasiswa,
+    result = { data: [], total: 0 },
+    isLoadingMahasiswa,
     createMahasiswa,
     updateMahasiswa,
     deleteMahasiswa,
-  } = useMahasiswa();
+  } = useMahasiswa({
+    q: search,
+    _sort: sortBy,
+    _order: sortOrder,
+    _page: page,
+    _limit: perPage,
+  });
 
   // Tambah mahasiswa baru
   const handleStoreMahasiswa = async (data) => {
@@ -51,7 +63,7 @@ const Mahasiswa = () => {
 
   // Modal edit
   const openEditModal = (id) => {
-    const mhs = mahasiswa?.find((m) => m.id === id);
+    const mhs = result.data?.find((m) => m.id === id);
     setSelectedMahasiswa(mhs);
     setModalOpen(true);
   };
@@ -66,7 +78,7 @@ const Mahasiswa = () => {
       handleUpdateMahasiswa(form);
       setModalOpen(false);
     } else {
-      const exists = mahasiswa.find((m) => m.nim === form.nim);
+      const exists = result.data.find((m) => m.nim === form.nim);
       if (exists) {
         toastError("NIM sudah terdaftar!");
         return;
@@ -80,6 +92,13 @@ const Mahasiswa = () => {
   const handleDelete = (id) => {
     handleDeleteMahasiswa(id);
   };
+
+  // Pagination & sort
+  const totalCount = result.total;
+  const totalPages = Math.ceil(totalCount / perPage);
+
+  const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
+  const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <div className="space-y-6 max-w-7xl">
@@ -109,19 +128,89 @@ const Mahasiswa = () => {
         </div>
       </div>
 
+      {/* Search, Sort, Limit */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        <input
+          type="text"
+          placeholder="Cari nama/NIM..."
+          className="border px-3 py-1 rounded flex-grow"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+        />
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+            setPage(1);
+          }}
+          className="border px-3 py-1 rounded"
+        >
+          <option value="name">Sort by Nama</option>
+          <option value="nim">Sort by NIM</option>
+        </select>
+        <select
+          value={sortOrder}
+          onChange={(e) => {
+            setSortOrder(e.target.value);
+            setPage(1);
+          }}
+          className="border px-3 py-1 rounded"
+        >
+          <option value="asc">A-Z</option>
+          <option value="desc">Z-A</option>
+        </select>
+        <select
+          value={perPage}
+          onChange={(e) => {
+            setPerPage(Number(e.target.value));
+            setPage(1);
+          }}
+          className="border px-3 py-1 rounded"
+        >
+          {[5, 10, 20, 50].map((num) => (
+            <option key={num} value={num}>{num} / halaman</option>
+          ))}
+        </select>
+      </div>
+
       <MahasiswaTable
-        mahasiswa={mahasiswa}
+        mahasiswa={result.data}
         openEditModal={openEditModal}
         onDelete={handleDelete}
         onDetail={(nim) => navigate(`/admin/mahasiswa/${nim}`)}
+        isLoading={isLoadingMahasiswa}
       />
-      
+
+      {/* Pagination */}
+      <div className="flex justify-between items-center mt-4">
+        <p className="text-sm">Halaman {page} dari {totalPages}</p>
+        <div className="flex gap-2">
+          <button
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            onClick={handlePrev}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <button
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            onClick={handleNext}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
       <MahasiswaModal
         isModalOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         onSubmit={handleSubmit}
         selectedMahasiswa={selectedMahasiswa}
-        mahasiswa={mahasiswa}
+        mahasiswa={result.data}
       />
     </div>
   );

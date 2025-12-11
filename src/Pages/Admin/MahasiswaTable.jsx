@@ -1,6 +1,6 @@
 import React from "react";
 
-const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
+const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoading }) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="overflow-x-auto">
@@ -14,7 +14,17 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {mahasiswa.length === 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={4} className="text-center py-12">
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-16 h-4 bg-gray-200 rounded animate-pulse mb-2" />
+                    <div className="w-32 h-4 bg-gray-200 rounded animate-pulse mb-2" />
+                    <div className="w-24 h-4 bg-gray-200 rounded animate-pulse" />
+                  </div>
+                </td>
+              </tr>
+            ) : mahasiswa.length === 0 ? (
               <tr>
                 <td colSpan={4} className="text-center py-12">
                   <div className="flex flex-col items-center justify-center">

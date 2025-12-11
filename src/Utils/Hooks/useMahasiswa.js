@@ -1,66 +1,62 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/mahasiswa';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAllMahasiswa, storeMahasiswa, updateMahasiswa as apiUpdateMahasiswa, deleteMahasiswa as apiDeleteMahasiswa } from "@/Utils/Apis/MahasiswaApi";
 
-export function useMahasiswa() {
+export const useMahasiswa = (query = {}) => {
   const queryClient = useQueryClient();
 
-  // Fetch all mahasiswa
   const {
-    data: mahasiswa,
+    data: res,
     isLoading,
     error,
-  } = useQuery(['mahasiswa'], async () => {
-    const res = await axios.get(API_URL);
-    return res.data;
+  } = useQuery({
+    queryKey: ["mahasiswa", query],
+    queryFn: () => getAllMahasiswa(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res?.headers["x-total-count"] ?? "0", 10),
+    }),
   });
 
   // Create mahasiswa
-  const createMahasiswa = useMutation(
-    async (newData) => {
-      const res = await axios.post(API_URL, newData);
+  const createMahasiswa = useMutation({
+    mutationFn: async (newData) => {
+      const res = await storeMahasiswa(newData);
       return res.data;
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['mahasiswa']);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries(["mahasiswa"]);
+    },
+  });
 
   // Update mahasiswa
-  const updateMahasiswa = useMutation(
-    async ({ id, ...updateData }) => {
-      const res = await axios.put(`${API_URL}/${id}`, updateData);
+  const updateMahasiswa = useMutation({
+    mutationFn: async ({ id, ...updateData }) => {
+      const res = await apiUpdateMahasiswa(id, updateData);
       return res.data;
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['mahasiswa']);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries(["mahasiswa"]);
+    },
+  });
 
   // Delete mahasiswa
-  const deleteMahasiswa = useMutation(
-    async (id) => {
-      await axios.delete(`${API_URL}/${id}`);
+  const deleteMahasiswa = useMutation({
+    mutationFn: async (id) => {
+      await apiDeleteMahasiswa(id);
       return id;
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['mahasiswa']);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries(["mahasiswa"]);
+    },
+  });
 
   return {
-    mahasiswa,
-    isLoading,
+    result: res ?? { data: [], total: 0 },
+    isLoadingMahasiswa: isLoading,
     error,
     createMahasiswa,
     updateMahasiswa,
-    deleteMahasiswa,
+    deleteMahasiswa: deleteMahasiswa,
   };
-}
+};
