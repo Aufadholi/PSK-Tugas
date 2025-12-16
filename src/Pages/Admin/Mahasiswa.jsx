@@ -180,7 +180,7 @@ const Mahasiswa = () => {
         mahasiswa={result.data}
         openEditModal={openEditModal}
         onDelete={handleDelete}
-        onDetail={(nim) => navigate(`/admin/mahasiswa/${nim}`)}
+        onDetail={(id) => navigate(`/admin/mahasiswa/${Number(id)}`)}
         isLoading={isLoadingMahasiswa}
       />
 

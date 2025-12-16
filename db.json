@@ -39,5 +39,16 @@
         "krs.read"
       ]
     }
+  ],
+  "dosen": [
+    { "id": 1, "nama": "Pak Budi", "maxSks": 12 },
+    { "id": 2, "nama": "Bu Sari", "maxSks": 9 }
+  ],
+  "matakuliah": [
+    { "id": 1, "nama": "Pemrograman Sisi Klien", "sks": 3 },
+    { "id": 2, "nama": "Basis Data", "sks": 2 }
+  ],
+  "kelas": [
+    { "id": 1, "nama": "Kelas A", "mataKuliahId": 1, "dosenId": 1, "mahasiswaIds": [1,2], "tahun": 2025 }
   ]
 }

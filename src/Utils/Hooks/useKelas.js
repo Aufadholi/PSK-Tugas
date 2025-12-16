@@ -5,6 +5,9 @@ import {
   storeKelas,
   updateKelas,
   deleteKelas,
+  getAllMataKuliah,
+  getAllDosen,
+  getAllMahasiswa,
 } from "@/Utils/Apis/KelasApi";
 
 export function useKelas() {
@@ -36,10 +39,28 @@ export function useKelas() {
     },
   });
 
+
+  // Tambahan hooks relasi
+  const matakuliahQuery = useQuery({
+    queryKey: ["matakuliah"],
+    queryFn: getAllMataKuliah,
+  });
+  const dosenQuery = useQuery({
+    queryKey: ["dosen"],
+    queryFn: getAllDosen,
+  });
+  const mahasiswaQuery = useQuery({
+    queryKey: ["mahasiswa"],
+    queryFn: getAllMahasiswa,
+  });
+
   return {
     kelasQuery,
     createKelas,
     updateKelasMutation,
     deleteKelasMutation,
+    matakuliahQuery,
+    dosenQuery,
+    mahasiswaQuery,
   };
 }

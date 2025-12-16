@@ -66,7 +66,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoadin
                     <div className="flex items-center justify-center gap-2">
                       <button
                         className="group relative px-3 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-medium text-sm transition-all duration-200"
-                        onClick={() => onDetail(mhs.id)}
+                        onClick={() => onDetail(Number(mhs.id))}
                         title="Lihat Detail"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

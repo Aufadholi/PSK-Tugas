@@ -23,7 +23,7 @@ const App = () => {
         <Route index element={<Navigate to="dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="mahasiswa" element={<Mahasiswa />} />
-        <Route path="mahasiswa/:nim" element={<MahasiswaDetail />} />
+        <Route path="mahasiswa/:id" element={<MahasiswaDetail />} />
         <Route path="kelas" element={<Kelas />} />
       </Route>
       <Route path="*" element={<Navigate to="/login" />} />

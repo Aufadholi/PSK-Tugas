@@ -13,7 +13,8 @@ const MahasiswaDetail = () => {
   useEffect(() => {
     const fetchMahasiswa = async () => {
       try {
-        const res = await getMahasiswa(id);
+        // Pastikan id dikonversi ke number
+        const res = await getMahasiswa(Number(id));
         setMahasiswa(res.data);
       } catch {
         toastError("Data tidak ditemukan");

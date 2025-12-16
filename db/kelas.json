@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "nama": "Kelas A",
+    "mataKuliahId": 1,
+    "dosenId": 1,
+    "mahasiswaIds": [1,2],
+    "tahun": 2025
+  }
+]
