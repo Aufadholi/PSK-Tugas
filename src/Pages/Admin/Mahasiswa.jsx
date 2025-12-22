@@ -32,16 +32,31 @@ const Mahasiswa = () => {
   // Tambah mahasiswa baru
   const handleStoreMahasiswa = async (data) => {
     createMahasiswa.mutate(data, {
-      onSuccess: () => toastSuccess("Data berhasil ditambahkan"),
-      onError: () => toastError("Gagal menambah data"),
+      onSuccess: () => {
+        toastSuccess("Data berhasil ditambahkan");
+        setModalOpen(false);
+        setSelectedMahasiswa(null);
+      },
+      onError: (error) => {
+        console.error("Error creating mahasiswa:", error);
+        toastError("Gagal menambah data");
+      },
     });
   };
 
   // Update mahasiswa
   const handleUpdateMahasiswa = async (data) => {
-    updateMahasiswa.mutate({ id: data.id, ...data }, {
-      onSuccess: () => toastSuccess("Data berhasil diperbarui"),
-      onError: () => toastError("Gagal update data"),
+    const { id, ...updateData } = data;
+    updateMahasiswa.mutate({ id, ...updateData }, {
+      onSuccess: () => {
+        toastSuccess("Data berhasil diperbarui");
+        setModalOpen(false);
+        setSelectedMahasiswa(null);
+      },
+      onError: (error) => {
+        console.error("Error updating mahasiswa:", error);
+        toastError("Gagal update data");
+      },
     });
   };
 
@@ -49,8 +64,13 @@ const Mahasiswa = () => {
   const handleDeleteMahasiswa = async (id) => {
     confirmDelete(() => {
       deleteMahasiswa.mutate(id, {
-        onSuccess: () => toastSuccess("Data berhasil dihapus"),
-        onError: () => toastError("Gagal menghapus data"),
+        onSuccess: () => {
+          toastSuccess("Data berhasil dihapus");
+        },
+        onError: (error) => {
+          console.error("Error deleting mahasiswa:", error);
+          toastError("Gagal menghapus data");
+        },
       });
     });
   };
@@ -75,16 +95,32 @@ const Mahasiswa = () => {
       return;
     }
     if (selectedMahasiswa) {
-      handleUpdateMahasiswa(form);
-      setModalOpen(false);
+      // Edit mode - pastikan semua field terisi dengan benar
+      const updateData = {
+        id: selectedMahasiswa.id,
+        nim: form.nim,
+        nama: form.nama,
+        maxSks: form.maxSks || selectedMahasiswa.maxSks || 24,
+        sksDiambil: form.sksDiambil || selectedMahasiswa.sksDiambil || 0,
+        status: form.status !== undefined ? form.status : true
+      };
+      handleUpdateMahasiswa(updateData);
     } else {
       const exists = result.data.find((m) => m.nim === form.nim);
       if (exists) {
         toastError("NIM sudah terdaftar!");
         return;
       }
-      handleStoreMahasiswa(form);
+      // Tambah mode - pastikan status default true
+      const newData = {
+        ...form,
+        maxSks: form.maxSks || 24,
+        sksDiambil: form.sksDiambil || 0,
+        status: form.status !== undefined ? form.status : true
+      };
+      handleStoreMahasiswa(newData);
       setModalOpen(false);
+      setSelectedMahasiswa(null);
     }
   };
 

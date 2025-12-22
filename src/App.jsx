@@ -1,3 +1,10 @@
+import KelasDosen from "@/Pages/Dosen/KelasDosen";
+import KelasMahasiswa from "@/Pages/Mahasiswa/KelasMahasiswa";
+      <Route path="/dosen/kelas" element={
+        <ProtectedRoute>
+          <KelasDosen />
+        </ProtectedRoute>
+      } />
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "@/Pages/Auth/Login";
 import Dashboard from "@/Pages/Admin/Dashboard";
@@ -26,6 +33,19 @@ const App = () => {
         <Route path="mahasiswa/:id" element={<MahasiswaDetail />} />
         <Route path="kelas" element={<Kelas />} />
       </Route>
+
+      {/* Dosen Route */}
+      <Route path="/dosen/kelas" element={
+        <ProtectedRoute>
+          <KelasDosen />
+        </ProtectedRoute>
+      } />
+      {/* Mahasiswa Route */}
+      <Route path="/mahasiswa/kelas" element={
+        <ProtectedRoute>
+          <KelasMahasiswa />
+        </ProtectedRoute>
+      } />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );

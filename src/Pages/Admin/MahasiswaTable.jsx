@@ -2,11 +2,11 @@ import React from "react";
 
 const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoading }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+            <tr className="bg-gray-50 border-b border-gray-200">
               <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">NIM</th>
               <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama Mahasiswa</th>
               <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
@@ -44,7 +44,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoadin
                   </td>
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                         <span className="text-white font-semibold text-sm">
                           {mhs.nama.charAt(0).toUpperCase()}
                         </span>
@@ -65,7 +65,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoadin
                   <td className="py-4 px-6">
                     <div className="flex items-center justify-center gap-2">
                       <button
-                        className="group relative px-3 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-medium text-sm transition-all duration-200"
+                        className="px-3 py-2 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium text-sm transition-colors"
                         onClick={() => onDetail(Number(mhs.id))}
                         title="Lihat Detail"
                       >
@@ -75,7 +75,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoadin
                         </svg>
                       </button>
                       <button
-                        className="group relative px-3 py-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 font-medium text-sm transition-all duration-200"
+                        className="px-3 py-2 rounded-md bg-yellow-50 hover:bg-yellow-100 text-yellow-700 font-medium text-sm transition-colors"
                         onClick={() => openEditModal(mhs.id)}
                         title="Edit Data"
                       >
@@ -84,7 +84,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete, onDetail, isLoadin
                         </svg>
                       </button>
                       <button
-                        className="group relative px-3 py-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-medium text-sm transition-all duration-200"
+                        className="px-3 py-2 rounded-md bg-red-50 hover:bg-red-100 text-red-600 font-medium text-sm transition-colors"
                         onClick={() => onDelete(mhs.id)}
                         title="Hapus Data"
                       >

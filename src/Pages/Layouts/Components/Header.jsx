@@ -22,13 +22,13 @@ const Header = () => {
   };
 
   return (
-    <header className="border-b border-gray-100 sticky top-0 z-20 bg-white/80 backdrop-blur-md flex items-center shadow-sm" style={{ height: "64px" }}>
+    <header className="border-b border-gray-200 sticky top-0 z-20 bg-white flex items-center shadow-sm" style={{ height: "64px" }}>
       <div className="flex-1 flex items-center justify-between px-8">
         <div className="flex items-center gap-4">
-          <h1 className="text-lg font-semibold text-gray-800">Platform Pembelajaran</h1>
+          <h1 className="text-lg font-semibold text-gray-800">Sistem Akademik</h1>
         </div>
         <div className="relative flex items-center gap-3">
-          <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+          <button className="p-2 hover:bg-gray-100 rounded-md transition-colors">
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
@@ -36,9 +36,9 @@ const Header = () => {
           <Button
             onClick={toggleProfileMenu}
             variant="secondary"
-            className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-xl border-none shadow-none bg-transparent transition-colors"
+            className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-md border-none shadow-none bg-transparent transition-colors"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-semibold">A</span>
             </div>
             <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ const Header = () => {
           </Button>
           <div
             id="profileMenu"
-            className="absolute right-0 top-14 w-56 bg-white rounded-xl shadow-lg py-2 hidden z-10 border border-gray-100"
+            className="absolute right-0 top-14 w-56 bg-white rounded-lg shadow-lg py-2 hidden z-10 border border-gray-200"
           >
             <div className="px-4 py-3 border-b border-gray-100">
               <p className="text-sm font-semibold text-gray-800">Admin</p>

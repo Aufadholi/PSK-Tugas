@@ -41,17 +41,18 @@ export function useKelas() {
 
 
   // Tambahan hooks relasi
+
   const matakuliahQuery = useQuery({
     queryKey: ["matakuliah"],
-    queryFn: getAllMataKuliah,
+    queryFn: async () => (await getAllMataKuliah()).data,
   });
   const dosenQuery = useQuery({
     queryKey: ["dosen"],
-    queryFn: getAllDosen,
+    queryFn: async () => (await getAllDosen()).data,
   });
   const mahasiswaQuery = useQuery({
     queryKey: ["mahasiswa"],
-    queryFn: getAllMahasiswa,
+    queryFn: async () => (await getAllMahasiswa()).data,
   });
 
   return {
