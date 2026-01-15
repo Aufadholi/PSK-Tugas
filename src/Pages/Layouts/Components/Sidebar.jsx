@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       className={`h-screen w-64 flex flex-col z-40 bg-white border-r border-gray-200
         fixed top-0 left-0 transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:static md:translate-x-0`}
+        md:sticky md:translate-x-0 md:top-0`}
     >
       <div className="p-6 border-b border-gray-200 flex items-center justify-between">
         <button
@@ -51,6 +51,66 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
               <span>Dashboard</span>
+            </NavLink>
+            <NavLink
+              to="/admin/quiz"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  isActive 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
+                }`
+              }
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span>Quiz</span>
+            </NavLink>
+            <NavLink
+              to="/admin/forum"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  isActive 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
+                }`
+              }
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span>Forum</span>
+            </NavLink>
+            <NavLink
+              to="/admin/pencapaian"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  isActive 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
+                }`
+              }
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              <span>Pencapaian</span>
+            </NavLink>
+            <NavLink
+              to="/admin/instruktur"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  isActive 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
+                }`
+              }
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span>Instruktur</span>
             </NavLink>
             <NavLink
               to="/admin/kelas"

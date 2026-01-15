@@ -38,22 +38,6 @@
       "nim": "A11.2020.00002",
       "maxSks": 18,
       "sksDiambil": 3
-    },
-    {
-      "nim": "A11.2021.00003",
-      "nama": "Sumanto",
-      "maxSks": 24,
-      "sksDiambil": 0,
-      "status": true,
-      "id": 3
-    },
-    {
-      "nim": "A11.2021.00005",
-      "nama": "Pikmi",
-      "maxSks": 24,
-      "sksDiambil": 0,
-      "status": true,
-      "id": 4
     }
   ],
   "matakuliah": [
